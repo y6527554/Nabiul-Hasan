@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nabiul Hasan — Student & Writer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0c0b;
+    --bg-soft: #10130f;
+    --ink: #f3f1e9;
+    --ink-dim: #9d9c92;
+    --line: rgba(243,241,233,0.09);
+    --emerald: #2f6f5a;
+    --emerald-bright: #52ad8a;
+    --gold: #cfa963;
+    --radius: 6px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans','Hind Siliguri', sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--emerald); color:#fff; }
+  a{ color:inherit; text-decoration:none; }
+  .eyebrow{
+    font-family:'Space Mono','Hind Siliguri', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); display:inline-block; }
+  h1,h2,h3{ font-family:'Bricolage Grotesque','Hind Siliguri', sans-serif; font-weight:600; line-height:1.1; letter-spacing:-0.01em; }
+
+  .arch-pattern{
+    position:fixed; inset:-60px; z-index:0; pointer-events:none; opacity:0.045;
+    background-image:
+      repeating-linear-gradient(45deg, var(--ink) 0 1px, transparent 1px 46px),
+      repeating-linear-gradient(-45deg, var(--ink) 0 1px, transparent 1px 46px);
+    animation:pattern-drift 40s linear infinite;
+  }
+  @keyframes pattern-drift{
+    0%{ transform:translate(0,0); }
+    50%{ transform:translate(-46px,46px); }
+    100%{ transform:translate(0,0); }
+  }
+  .glow-blob{ position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0; }
+  .ambient-field{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .ambient-blob{
+    position:absolute; border-radius:50%; filter:blur(110px);
+    animation:drift-float 22s ease-in-out infinite alternate;
+  }
+  .ambient-blob.b1{ width:460px; height:460px; background:rgba(47,111,90,0.16); top:2%; left:-8%; animation-duration:26s; }
+  .ambient-blob.b2{ width:380px; height:380px; background:rgba(207,169,99,0.10); top:38%; right:-6%; animation-duration:20s; animation-delay:-4s; }
+  .ambient-blob.b3{ width:420px; height:420px; background:rgba(82,173,138,0.12); bottom:4%; left:18%; animation-duration:30s; animation-delay:-10s; }
+  .ambient-blob.b4{ width:300px; height:300px; background:rgba(207,169,99,0.08); top:70%; right:22%; animation-duration:18s; animation-delay:-7s; }
+  @keyframes drift-float{
+    0%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(40px,-50px) scale(1.12); }
+    100%{ transform:translate(-30px,30px) scale(0.96); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .arch-pattern, .ambient-blob{ animation:none !important; }
+  }
+
+  .divider{ position:relative; height:1px; width:100%; background:var(--line); overflow:visible; }
+  .divider::before{
+    content:""; position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+    width:220px; height:2px;
+    background:linear-gradient(90deg, transparent, var(--emerald-bright), var(--gold), transparent);
+    filter:blur(1px); animation:glide 6s ease-in-out infinite;
+  }
+  @keyframes glide{ 0%,100%{ opacity:0.5; width:160px;} 50%{ opacity:1; width:260px;} }
+
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw; backdrop-filter:blur(12px);
+    background:rgba(10,12,11,0.55); border-bottom:1px solid var(--line);
+  }
+  .logo{ font-family:'Bricolage Grotesque', sans-serif; font-size:21px; font-weight:700; }
+  .logo span{ color:var(--emerald-bright); }
+  .nav-links{ display:flex; gap:34px; font-size:14px; color:var(--ink-dim); align-items:center; }
+  .nav-links a{ position:relative; transition:color .3s; }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:-6px; width:0; height:1px;
+    background:var(--emerald-bright); transition:width .3s;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-right{ display:flex; align-items:center; gap:14px; }
+  .lang-toggle{
+    font-family:'Space Mono','Hind Siliguri', monospace; font-size:12.5px; font-weight:700;
+    border:1px solid var(--line); padding:9px 16px; border-radius:30px; cursor:pointer;
+    background:transparent; color:var(--ink-dim); transition:all .3s;
+  }
+  .lang-toggle:hover{ border-color:var(--gold); color:var(--gold); }
+  .nav-cta{
+    font-size:13px; font-family:'Space Mono', monospace; font-weight:700;
+    border:1px solid var(--line); padding:10px 20px; border-radius:30px; transition:all .35s;
+  }
+  .nav-cta:hover{ border-color:var(--emerald-bright); color:var(--emerald-bright); background:rgba(82,173,138,0.08); }
+  .burger{ display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:60; }
+  .burger span{ width:24px; height:1px; background:var(--ink); }
+
+  .hero{ position:relative; min-height:100vh; display:flex; align-items:center; padding:120px 6vw 60px; z-index:1; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center; width:100%; }
+
+  .name-signature{
+    position:relative; display:inline-block; font-family:'Bricolage Grotesque','Hind Siliguri', sans-serif;
+    font-size:22px; font-weight:700; color:var(--ink); margin-bottom:20px; z-index:2; letter-spacing:0.01em;
+  }
+  .name-signature::before{
+    content:""; position:absolute; left:-10px; right:-10px; bottom:1px; height:13px;
+    background:linear-gradient(90deg, var(--gold), var(--emerald-bright));
+    opacity:0.28; z-index:-1; transform:skew(-8deg); border-radius:2px;
+  }
+
+  .hero-eyebrow{ margin-bottom:26px; }
+  .hero h1{ font-size:clamp(38px, 4.8vw, 64px); color:var(--ink); }
+  .hero h1 em{ font-style:italic; font-weight:400; color:var(--emerald-bright); }
+  .typewriter{
+    font-family:'Space Mono','Hind Siliguri', monospace; font-size:15px; color:var(--gold);
+    margin-top:24px; min-height:22px; border-right:2px solid var(--gold);
+    display:inline-block; white-space:nowrap; overflow:hidden;
+  }
+  .hero p.lede{ margin-top:28px; max-width:460px; color:var(--ink-dim); font-size:16.5px; line-height:1.8; }
+  .hero-actions{ margin-top:40px; display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family:'Space Mono','Hind Siliguri', monospace; font-size:13px; padding:15px 28px; font-weight:700;
+    border-radius:40px; display:inline-flex; align-items:center; gap:8px; transition:all .35s;
+  }
+  .btn-primary{ background:var(--emerald); color:#fff; }
+  .btn-primary:hover{ background:var(--emerald-bright); transform:translateY(-2px); box-shadow:0 8px 24px -8px rgba(82,173,138,0.6); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--ink-dim); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); color:var(--ink); }
+
+  .photo-frame{
+    position:relative; width:100%; max-width:360px; margin:0 auto; aspect-ratio:3/4;
+    clip-path: path('M0,400 L0,140 C0,60 70,0 150,0 C230,0 300,60 300,140 L300,400 Z');
+    background:linear-gradient(160deg, #1c2b23, #0a0c0b 70%);
+    display:flex; align-items:center; justify-content:center; border:1px solid var(--line); overflow:hidden;
+  }
+  .photo-frame::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(82,173,138,0.28), transparent 55%),
+      radial-gradient(circle at 80% 90%, rgba(207,169,99,0.16), transparent 50%);
+  }
+  .photo-frame img{
+    width:100%; height:100%; object-fit:cover;
+    filter:grayscale(35%) contrast(1.05) brightness(0.9) sepia(8%);
+    mix-blend-mode:luminosity; opacity:0.92;
+  }
+  .photo-placeholder-text{
+    position:relative; z-index:2; text-align:center; color:var(--ink-dim);
+    font-family:'Space Mono', monospace; font-size:12px; padding:0 30px; line-height:1.6;
+  }
+  .photo-caption{
+    text-align:center; margin-top:20px; font-family:'Space Mono','Hind Siliguri', monospace;
+    font-size:12px; color:var(--ink-dim); letter-spacing:0.06em;
+  }
+
+  .marquee-wrap{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:24px 0; overflow:hidden; white-space:nowrap; position:relative; z-index:1;
+    background:linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
+  }
+  .marquee-track{ display:inline-block; animation:scroll-left 30s linear infinite; }
+  .marquee-track span{
+    font-family:'Space Mono','Hind Siliguri', monospace; font-size:13px; color:var(--ink-dim);
+    margin:0 34px; letter-spacing:0.05em;
+  }
+  .marquee-track span.dot::before{ content:"✦"; color:var(--gold); margin-right:34px; }
+  @keyframes scroll-left{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  section{ position:relative; z-index:1; padding:130px 6vw; }
+  .section-head{ max-width:640px; margin-bottom:64px; }
+  .section-head h2{ font-size:clamp(28px,3.6vw,44px); margin-top:18px; }
+  .section-head p{ color:var(--ink-dim); margin-top:18px; line-height:1.8; font-size:16px; }
+
+  .pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .pillar{
+    background:var(--bg-soft); padding:48px 36px; opacity:0; transform:translateY(26px);
+    transition:opacity .7s ease, transform .7s ease, background .3s; position:relative;
+  }
+  .pillar.in-view{ opacity:1; transform:translateY(0); }
+  .pillar:hover{ background:#141813; }
+  .pillar .num{ font-family:'Space Mono', monospace; color:var(--gold); font-size:13px; }
+  .pillar h3{ font-size:24px; margin:20px 0 12px; }
+  .pillar p{ color:var(--ink-dim); font-size:14.5px; line-height:1.8; }
+  .pillar .glyph{ position:absolute; top:36px; right:32px; width:34px; height:34px; opacity:0.5; border:1px solid var(--emerald-bright); border-radius:50%; }
+
+  .filter-tabs{ display:flex; gap:10px; margin-bottom:44px; flex-wrap:wrap; }
+  .filter-tab{
+    font-family:'Space Mono','Hind Siliguri', monospace; font-size:12px; padding:10px 18px;
+    border:1px solid var(--line); border-radius:30px; color:var(--ink-dim); cursor:pointer; transition:all .3s;
+  }
+  .filter-tab.active, .filter-tab:hover{ border-color:var(--emerald-bright); color:var(--emerald-bright); background:rgba(82,173,138,0.08); }
+  .blog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .blog-card{
+    border:1px solid var(--line); padding:34px 28px; border-radius:var(--radius);
+    background:linear-gradient(165deg, rgba(255,255,255,0.02), transparent 60%);
+    opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease, border-color .35s, transform .35s;
+    cursor:pointer; position:relative; overflow:hidden;
+  }
+  .blog-card::after{
+    content:""; position:absolute; inset:0; border-radius:var(--radius);
+    background:radial-gradient(circle at 50% 0%, rgba(82,173,138,0.12), transparent 70%);
+    opacity:0; transition:opacity .4s;
+  }
+  .blog-card.in-view{ opacity:1; transform:translateY(0); }
+  .blog-card:hover{ border-color:var(--emerald-bright); transform:translateY(-6px); }
+  .blog-card:hover::after{ opacity:1; }
+  .tag{ font-family:'Space Mono','Hind Siliguri', monospace; font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:0.09em; }
+  .blog-card h3{ font-size:20px; margin:18px 0 10px; position:relative; z-index:1; }
+  .blog-card p{ color:var(--ink-dim); font-size:14px; line-height:1.7; position:relative; z-index:1; }
+  .blog-card .meta{ margin-top:22px; font-size:12px; color:var(--ink-dim); font-family:'Space Mono','Hind Siliguri', monospace; display:flex; justify-content:space-between; position:relative; z-index:1; }
+
+  .timeline{ border-left:1px solid var(--line); padding-left:38px; display:flex; flex-direction:column; gap:54px; }
+  .t-item{ position:relative; opacity:0; transform:translateX(-18px); transition:opacity .6s, transform .6s; }
+  .t-item.in-view{ opacity:1; transform:translateX(0); }
+  .t-item::before{
+    content:""; position:absolute; left:-44px; top:4px; width:10px; height:10px; border-radius:50%;
+    background:var(--emerald-bright); box-shadow:0 0 0 5px rgba(82,173,138,0.14);
+  }
+  .t-item .year{ font-family:'Space Mono','Hind Siliguri', monospace; color:var(--gold); font-size:13px; }
+  .t-item h3{ font-size:22px; margin:11px 0 8px; }
+  .t-item p{ color:var(--ink-dim); font-size:14.5px; line-height:1.8; max-width:520px; }
+
+  .contact-box{
+    border:1px solid var(--line); padding:80px 60px; border-radius:14px; text-align:left;
+    background:radial-gradient(circle at 20% 0%, rgba(47,111,90,0.14), transparent 60%);
+    position:relative; overflow:hidden;
+  }
+  .bg-name-type{ display:none; }
+  .contact-box h2{ font-size:clamp(40px,6vw,76px); position:relative; z-index:1; }
+  .contact-box h2 .outline-word{
+    color:transparent; -webkit-text-stroke:1.5px var(--emerald-bright);
+  }
+  .contact-box p{ color:var(--ink-dim); margin:22px 0 36px; max-width:440px; line-height:1.8; position:relative; z-index:1; }
+  .social-row{ display:flex; gap:14px; flex-wrap:wrap; position:relative; z-index:1; margin-bottom:44px; }
+  .social-pill{
+    display:inline-flex; align-items:center; gap:10px; padding:14px 22px;
+    border:1px solid var(--line); border-radius:40px; font-size:14px; color:var(--ink-dim);
+    background:rgba(255,255,255,0.02); transition:all .3s;
+  }
+  .social-pill:hover{ border-color:var(--emerald-bright); color:var(--ink); background:rgba(82,173,138,0.08); transform:translateY(-2px); }
+  .social-pill svg{ width:18px; height:18px; }
+  .contact-email{ position:relative; z-index:1; }
+
+  .footer-name{ font-family:'Bricolage Grotesque', sans-serif; font-size:19px; font-weight:700; }
+  .footer-name .accent{ color:var(--emerald-bright); }
+  .footer-tagline{ margin-top:4px; font-size:13px; color:var(--ink-dim); }
+  footer{
+    border-top:1px solid var(--line); padding:90px 6vw 44px; display:flex;
+    justify-content:space-between; align-items:flex-end; font-size:13px; color:var(--ink-dim); position:relative; z-index:1;
+    flex-wrap:wrap; gap:16px; overflow:hidden; min-height:260px;
+  }
+  .footer-bgname{ display:none; }
+  .footer-bgname-1, .footer-bgname-2{
+    position:absolute; z-index:0; pointer-events:none;
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+    font-size:clamp(60px, 11vw, 170px); line-height:1; letter-spacing:-0.02em;
+    color:transparent; -webkit-text-stroke:1px rgba(243,241,233,0.08);
+    white-space:nowrap; user-select:none;
+  }
+  .footer-bgname-1{ left:1%; top:2%; }
+  .footer-bgname-2{ left:38%; top:32%; }
+  @media (max-width:860px){
+    .footer-bgname-1{ font-size:clamp(46px,18vw,90px); top:0%; }
+    .footer-bgname-2{ left:12%; top:26%; font-size:clamp(46px,18vw,90px); }
+  }
+  .footer-content{ position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-end; width:100%; flex-wrap:wrap; gap:16px; }
+  .socials{ display:flex; gap:22px; }
+  .socials a{ transition:color .3s; }
+  .socials a:hover{ color:var(--emerald-bright); }
+
+  @media (max-width:860px){
+    .nav-links{ display:none; }
+    .nav-right .nav-cta{ display:none; }
+    .burger{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; gap:48px; }
+    .hero{ text-align:left; padding-top:110px; }
+    .pillars, .blog-grid{ grid-template-columns:1fr; }
+    .contact-box{ padding:44px 26px; }
+    section{ padding:90px 6vw; }
+    footer{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="arch-pattern"></div>
+<div class="ambient-field">
+  <div class="ambient-blob b1"></div>
+  <div class="ambient-blob b2"></div>
+  <div class="ambient-blob b3"></div>
+  <div class="ambient-blob b4"></div>
+</div>
+
+<nav>
+  <div class="logo">Nabiul<span>.</span></div>
+  <div class="nav-links">
+    <a href="#about" data-en="About" data-bn="সম্পর্কে">About</a>
+    <a href="#blog" data-en="Blog" data-bn="ব্লগ">Blog</a>
+    <a href="#journey" data-en="Journey" data-bn="যাত্রা">Journey</a>
+    <a href="#contact" data-en="Contact" data-bn="যোগাযোগ">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="lang-toggle" id="langToggle">বাংলা</button>
+    <a href="#contact" class="nav-cta" data-en="Say Salaam →" data-bn="সালাম দিন →">Say Salaam →</a>
+  </div>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="glow-blob" style="width:420px;height:420px;background:rgba(47,111,90,0.22);top:-100px;left:-140px;"></div>
+  <div class="glow-blob" style="width:360px;height:360px;background:rgba(207,169,99,0.12);bottom:-120px;right:-100px;"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="name-signature" data-en="Nabiul Hasan" data-bn="নবিউল হাসান">Nabiul Hasan</div>
+      <div class="eyebrow hero-eyebrow" data-en="HSC '28 · Dhaka, Bangladesh" data-bn="এইচএসসি '২৮ · ঢাকা, বাংলাদেশ">HSC '28 · Dhaka, Bangladesh</div>
+      <h1 data-en="Still learning, {em}still becoming.{/em}" data-bn="এখনো শিখছি, {em}এখনো গড়ে উঠছি।{/em}">Still learning, <em>still becoming.</em></h1>
+      <div class="typewriter" id="typewriter"></div>
+      <p class="lede" data-en="I'm a student trying to balance deen, studies, and a quiet love for writing — this is where I keep a record of both my school life and the thoughts I don't want to lose." data-bn="আমি একজন ছাত্র, দ্বীন, পড়াশোনা আর লেখালেখির প্রতি ভালোবাসা — এই তিনটার মধ্যে ভারসাম্য রাখার চেষ্টা করি। এখানেই আমি আমার স্কুলজীবন আর হারিয়ে যেতে না চাওয়া ভাবনাগুলো লিখে রাখি।">I'm a student trying to balance deen, studies, and a quiet love for writing — this is where I keep a record of both my school life and the thoughts I don't want to lose.</p>
+      <div class="hero-actions">
+        <a href="#blog" class="btn btn-primary" data-en="Read the blog →" data-bn="ব্লগ পড়ুন →">Read the blog →</a>
+        <a href="#about" class="btn btn-ghost" data-en="About me" data-bn="আমার সম্পর্কে">About me</a>
+      </div>
+    </div>
+    <div>
+      <div class="photo-frame">
+        <img src="" alt="Your photo here" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="photo-placeholder-text" style="display:flex; flex-direction:column;">
+          <span>YOUR PHOTO</span>
+          <span style="margin-top:8px; opacity:0.6;">drop an edited, arch-cropped photo here</span>
+        </div>
+      </div>
+      <div class="photo-caption" data-en="Nabiul Hasan — Class of 2028" data-bn="নবিউল হাসান — ব্যাচ ২০২৮">Nabiul Hasan — Class of 2028</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="dot" data-en="NOTRE DAME COLLEGE" data-bn="নটর ডেম কলেজ">NOTRE DAME COLLEGE</span><span class="dot" data-en="QURAN QUIZ '25 — 2ND RUNNER UP" data-bn="কুরআন কুইজ '২৫ — ২য় রানার আপ">QURAN QUIZ '25 — 2ND RUNNER UP</span><span class="dot" data-en="DEBATE CLUB" data-bn="বিতর্ক ক্লাব">DEBATE CLUB</span><span class="dot" data-en="SCIENCE FAIR '24" data-bn="বিজ্ঞান মেলা '২৪">SCIENCE FAIR '24</span>
+    <span class="dot" data-en="NOTRE DAME COLLEGE" data-bn="নটর ডেম কলেজ">NOTRE DAME COLLEGE</span><span class="dot" data-en="QURAN QUIZ '25 — 2ND RUNNER UP" data-bn="কুরআন কুইজ '২৫ — ২য় রানার আপ">QURAN QUIZ '25 — 2ND RUNNER UP</span><span class="dot" data-en="DEBATE CLUB" data-bn="বিতর্ক ক্লাব">DEBATE CLUB</span><span class="dot" data-en="SCIENCE FAIR '24" data-bn="বিজ্ঞান মেলা '২৪">SCIENCE FAIR '24</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-head">
+    <div class="eyebrow" data-en="Who I Am" data-bn="আমি কে">Who I Am</div>
+    <h2 data-en="Three things I try to hold onto." data-bn="তিনটা জিনিস যা আমি ধরে রাখার চেষ্টা করি।">Three things I try to hold onto.</h2>
+    <p data-en="Not a resume — just what actually shapes how I spend my days." data-bn="এটা কোনো জীবনবৃত্তান্ত না — শুধু যা আসলে আমার দিন গড়ে তোলে।">Not a resume — just what actually shapes how I spend my days.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar"><div class="glyph"></div><div class="num">01</div>
+      <h3 data-en="Faith" data-bn="বিশ্বাস">Faith</h3>
+      <p data-en="Some days steadier than others. I try to keep salah on time and let it shape the rest of the day — not something I've mastered, just something I keep returning to." data-bn="কোনো দিন ভালো যায়, কোনো দিন না। নামাজ সময়মতো পড়ার আর তার প্রভাবটা বাকি দিনে রাখার চেষ্টা করি — এটা কোনো অর্জন না, শুধু বারবার ফিরে আসার একটা জায়গা।">Some days steadier than others. I try to keep salah on time and let it shape the rest of the day — not something I've mastered, just something I keep returning to.</p>
+    </div>
+    <div class="pillar"><div class="glyph"></div><div class="num">02</div>
+      <h3 data-en="Studies" data-bn="পড়াশোনা">Studies</h3>
+      <p data-en="HSC science group. Slow and steady over cramming — I'd rather actually understand a chapter than rush it." data-bn="এইচএসসি বিজ্ঞান বিভাগ। মুখস্থের চেয়ে ধীরে ধীরে বোঝাটাই আমার কাছে বেশি গুরুত্বপূর্ণ।">HSC science group. Slow and steady over cramming — I'd rather actually understand a chapter than rush it.</p>
+    </div>
+    <div class="pillar"><div class="glyph"></div><div class="num">03</div>
+      <h3 data-en="Writing" data-bn="লেখালেখি">Writing</h3>
+      <p data-en="I process most things by writing them down first. Half of this blog started as notes to myself." data-bn="বেশিরভাগ জিনিস আগে লিখে তারপর বুঝি। এই ব্লগের অর্ধেক পোস্টই শুরু হয়েছিল নিজের জন্য লেখা নোট থেকে।">I process most things by writing them down first. Half of this blog started as notes to myself.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="blog">
+  <div class="section-head">
+    <div class="eyebrow" data-en="The Blog" data-bn="ব্লগ">The Blog</div>
+    <h2 data-en="Notes on faith, and everything around it." data-bn="ঈমান আর তার চারপাশের সবকিছু নিয়ে কিছু কথা।">Notes on faith, and everything around it.</h2>
+    <p data-en="Reflections, not lectures — written by a student, for anyone who wants to read along." data-bn="উপদেশ না, উপলব্ধি — একজন ছাত্রের লেখা, যে কেউ পড়তে চান তার জন্য।">Reflections, not lectures — written by a student, for anyone who wants to read along.</p>
+  </div>
+  <div class="filter-tabs">
+    <div class="filter-tab active" data-en="All" data-bn="সব">All</div>
+    <div class="filter-tab" data-en="Reflections" data-bn="উপলব্ধি">Reflections</div>
+    <div class="filter-tab" data-en="Daily Life" data-bn="দৈনন্দিন জীবন">Daily Life</div>
+    <div class="filter-tab" data-en="Stories" data-bn="গল্প">Stories</div>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <span class="tag" data-en="Reflections" data-bn="উপলব্ধি">Reflections</span>
+      <h3 data-en="What Ramadan taught me about time" data-bn="রমজান আমাকে সময় সম্পর্কে যা শিখিয়েছে">What Ramadan taught me about time</h3>
+      <p data-en="A short piece on how fasting changed the way I look at my own daily schedule." data-bn="রোজা কীভাবে আমার দৈনন্দিন রুটিন দেখার দৃষ্টিভঙ্গি বদলে দিয়েছে, তা নিয়ে ছোট একটা লেখা।">A short piece on how fasting changed the way I look at my own daily schedule.</p>
+      <div class="meta"><span data-en="5 min read" data-bn="৫ মিনিট">5 min read</span><span>→</span></div>
+    </div>
+    <div class="blog-card">
+      <span class="tag" data-en="Daily Life" data-bn="দৈনন্দিন জীবন">Daily Life</span>
+      <h3 data-en="When salah gets squeezed into a study break" data-bn="যখন নামাজ পড়াশোনার ফাঁকে চাপা পড়ে যায়">When salah gets squeezed into a study break</h3>
+      <p data-en="Some weeks the rhythm holds, some weeks it doesn't. A few honest thoughts on the days it slips." data-bn="কোনো সপ্তাহে ছন্দটা ঠিক থাকে, কোনো সপ্তাহে থাকে না। যেসব দিন সবকিছু এলোমেলো হয়ে যায়, তা নিয়ে কিছু সৎ কথা।">Some weeks the rhythm holds, some weeks it doesn't. A few honest thoughts on the days it slips.</p>
+      <div class="meta"><span data-en="4 min read" data-bn="৪ মিনিট">4 min read</span><span>→</span></div>
+    </div>
+    <div class="blog-card">
+      <span class="tag" data-en="Stories" data-bn="গল্প">Stories</span>
+      <h3 data-en="The first time I really understood a du'a" data-bn="যেদিন প্রথম সত্যিই একটা দোয়া বুঝেছিলাম">The first time I really understood a du'a</h3>
+      <p data-en="On a specific evening that made a familiar prayer suddenly feel personal." data-bn="একটা নির্দিষ্ট সন্ধ্যার কথা, যেদিন চেনা একটা দোয়া হঠাৎ একদম নিজের মনে হয়েছিল।">On a specific evening that made a familiar prayer suddenly feel personal.</p>
+      <div class="meta"><span data-en="6 min read" data-bn="৬ মিনিট">6 min read</span><span>→</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="journey">
+  <div class="section-head">
+    <div class="eyebrow" data-en="Journey" data-bn="যাত্রা">Journey</div>
+    <h2 data-en="Where I've been, where I'm headed." data-bn="কোথা থেকে এসেছি, কোথায় যাচ্ছি।">Where I've been, where I'm headed.</h2>
+  </div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="year" data-en="2022–2026" data-bn="২০২২–২০২৬">2022–2026</div>
+      <h3 data-en="Secondary School" data-bn="মাধ্যমিক বিদ্যালয়">Secondary School</h3>
+      <p data-en="Finished SSC in 2026, science group — where the habit of writing things down actually started." data-bn="২০২৬ সালে বিজ্ঞান বিভাগ থেকে এসএসসি শেষ করেছি — এখান থেকেই লেখার অভ্যাসটা আসলে শুরু।">Finished SSC in 2026, science group — where the habit of writing things down actually started.</p>
+    </div>
+    <div class="t-item">
+      <div class="year" data-en="2026–Present" data-bn="২০২৬–বর্তমান">2026–Present</div>
+      <h3 data-en="HSC, Science" data-bn="এইচএসসি, বিজ্ঞান">HSC, Science</h3>
+      <p data-en="Currently in HSC, trying to keep studies and faith moving together instead of picking one over the other." data-bn="এখন এইচএসসিতে আছি, পড়াশোনা আর ঈমান — কোনো একটাকে বেছে না নিয়ে দুটোকেই একসাথে এগিয়ে নেওয়ার চেষ্টা করছি।">Currently in HSC, trying to keep studies and faith moving together instead of picking one over the other.</p>
+    </div>
+    <div class="t-item">
+      <div class="year" data-en="Ahead" data-bn="সামনে">Ahead</div>
+      <h3 data-en="University & Beyond" data-bn="বিশ্ববিদ্যালয় ও তার পরে">University & Beyond</h3>
+      <p data-en="Still figuring out the exact path — but wanting whatever it is to stay rooted in the same values." data-bn="এখনো সঠিক পথটা খুঁজছি — তবে যাই হোক না কেন, একই মূল্যবোধেই যেন আটকে থাকে।">Still figuring out the exact path — but wanting whatever it is to stay rooted in the same values.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-box">
+    <div class="eyebrow" data-en="Get In Touch" data-bn="যোগাযোগ করুন">Get In Touch</div>
+    <h2 style="margin-top:16px;"><span data-en="Let's" data-bn="চলুন">Let's</span> <span class="outline-word" data-en="Connect." data-bn="যুক্ত হই।">Connect.</span></h2>
+    <p data-en="Whether it's about a blog post or just to say salaam — my inbox is open." data-bn="কোনো ব্লগ পোস্ট নিয়ে হোক বা শুধু সালাম দিতে — আমার ইনবক্স খোলা।">Whether it's about a blog post or just to say salaam — my inbox is open.</p>
+    <div class="social-row">
+      <a href="#" class="social-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>
+      <a href="#" class="social-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>Instagram</a>
+      <a href="#" class="social-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.9 7.3L3 20l1.3-5A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.5 9.5c0 3.5 2.5 6 6 6"/></svg>WhatsApp</a>
+    </div>
+    <a href="mailto:nabiul@example.com" class="btn btn-primary contact-email">nabiul@example.com</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bgname-1">Nabiul</div>
+  <div class="footer-bgname-2">Hasan</div>
+  <div class="footer-content">
+    <div>
+      <div class="footer-name">Nabiul <span class="accent">Hasan</span></div>
+      <div class="footer-tagline" data-en="Student · Dhaka, Bangladesh · Class of '28" data-bn="শিক্ষার্থী · ঢাকা, বাংলাদেশ · ব্যাচ ২০২৮">Student · Dhaka, Bangladesh · Class of '28</div>
+    </div>
+    <div data-en="All rights reserved © 2026 Nabiul Hasan" data-bn="সর্বস্বত্ব সংরক্ষিত © ২০২৬ নবিউল হাসান">All rights reserved © 2026 Nabiul Hasan</div>
+  </div>
+</footer>
+
+<script>
+  const phrasesEn = ["HSC student.", "Aspiring writer.", "Trying to be a better Muslim, one day at a time."];
+  const phrasesBn = ["এইচএসসি শিক্ষার্থী।", "লেখক হওয়ার স্বপ্ন।", "প্রতিদিন একটু একটু করে ভালো মুসলিম হওয়ার চেষ্টা।"];
+  let phrases = phrasesEn;
+  const el = document.getElementById('typewriter');
+  let pIndex=0, cIndex=0, deleting=false;
+  function tick(){
+    const current = phrases[pIndex % phrases.length];
+    if(!deleting){
+      cIndex++;
+      el.textContent = current.slice(0,cIndex);
+      if(cIndex===current.length){ deleting=true; setTimeout(tick, 1400); return; }
+    } else {
+      cIndex--;
+      el.textContent = current.slice(0,cIndex);
+      if(cIndex===0){ deleting=false; pIndex=(pIndex+1)%phrases.length; }
+    }
+    setTimeout(tick, deleting?40:65);
+  }
+  tick();
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in-view'); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('.pillar, .blog-card, .t-item').forEach(el=>io.observe(el));
+
+  document.querySelector('.burger').addEventListener('click', ()=>{
+    document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='flex' ? 'none' : 'flex';
+    document.querySelector('.nav-links').style.cssText += 'position:fixed; top:70px; left:0; right:0; background:#0a0c0b; flex-direction:column; padding:24px 6vw; border-bottom:1px solid var(--line); z-index:55; gap:18px;';
+  });
+
+  document.querySelectorAll('.filter-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Language toggle
+  let currentLang = 'en';
+  const langBtn = document.getElementById('langToggle');
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(node=>{
+      const text = lang==='bn' ? node.getAttribute('data-bn') : node.getAttribute('data-en');
+      if(text.includes('{em}')){
+        node.innerHTML = text.replace('{em}','<em>').replace('{/em}','</em>');
+      } else {
+        node.textContent = text;
+      }
+    });
+    phrases = lang==='bn' ? phrasesBn : phrasesEn;
+    pIndex = 0; cIndex = 0; deleting = false;
+    langBtn.textContent = lang==='bn' ? 'English' : 'বাংলা';
+    document.documentElement.lang = lang;
+    currentLang = lang;
+  }
+  langBtn.addEventListener('click', ()=> applyLang(currentLang==='en' ? 'bn' : 'en'));
+</script>
+</body>
+</html>
